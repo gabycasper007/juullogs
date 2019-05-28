@@ -33,11 +33,15 @@ const diffDateInMinutes = (date1, date2) => {
 
 const parseLogs = lines => {
   const logs = [];
+  let refDate;
+
   for (let i = 0, n = lines.length; i < n; i++) {
     let [date, log] = lines[i];
     if (logs.length === 0) {
+      refDate = lines[i][0];
       logs.push([log]);
-    } else if (diffDateInMinutes(date, lines[i - 1][0]) > 5) {
+    } else if (diffDateInMinutes(date, refDate) > 5) {
+      refDate = lines[i][0];
       logs.push([log]);
     } else {
       logs[logs.length - 1].push(log);
